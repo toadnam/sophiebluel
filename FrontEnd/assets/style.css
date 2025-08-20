@@ -186,3 +186,45 @@ footer nav ul {
 	margin: 2em
 }
 
+.filters {
+  display: flex;
+  justify-content: center;  
+  gap: 10px;                 
+  flex-wrap: wrap;           
+  margin-top: 50px;
+  margin-bottom: 50px;       
+}
+
+.filters [role="tab"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 38px;              
+  padding: 0 20px;           
+  border: 1px solid #1D6154;
+  border-radius: 60px;       
+  background: #fff;
+  color: #1D6154;
+
+  font-family: "Syne", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1;            
+  cursor: pointer;
+}
+
+/* Actif : accepte .active ET aria-selected="true" */
+.filters [role="tab"].active,
+.filters [role="tab"][aria-selected="true"] {
+  background: #1D6154;
+  color: #fff;
+  border-color: #1D6154;
+}
+
+/* Focus clavier visible (a11y) */
+.filters [role="tab"]:focus-visible {
+  outline: 2px solid #1D6154;
+  outline-offset: 2px;
+  border-radius: 60px;
+}
