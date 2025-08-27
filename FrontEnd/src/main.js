@@ -10,6 +10,7 @@ const token = localStorage.getItem('token');
 const isLogged = !!token;
 
 if (adminBar) adminBar.hidden = !isLogged;
+adminBar.style.display = isLogged ? 'flex' : 'none';
 if (editBtn) editBtn.hidden = !isLogged;
 if (filtersEl) filtersEl.hidden = isLogged;
 
@@ -20,6 +21,8 @@ if (authLink) {
         authLink.addEventListener('click', (e) => {
             e.preventDefault();
             localStorage.removeItem('token');
+            const bar = document.getElementById('admin-bar');
+            if (bar) { bar.hidden = true; bar.style.display = 'none'; }
             window.location.reload();
         });
     } else {
