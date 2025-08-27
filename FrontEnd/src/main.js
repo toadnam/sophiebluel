@@ -2,6 +2,31 @@ import { getWorks, getCategories } from "./api.js";
 
 const galleryEl = document.getElementById("gallery");
 const filtersEl = document.querySelector(".filters");
+const adminBar = document.getElementById('admin-bar');
+const authLink = document.getElementById('auth-link');
+const editBtn = document.getElementById('edit-btn');
+
+const token = localStorage.getItem('token');
+const isLogged = !!token;
+
+if (adminBar) adminBar.hidden = !isLogged;
+if (editBtn) editBtn.hidden = !isLogged;
+if (filtersEl) filtersEl.hidden = isLogged;
+
+if (authLink) {
+    if (isLogged) {
+        authLink.textContent = 'logout';
+        authLink.href = '#';
+        authLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            localStorage.removeItem('token');
+            window.location.reload();
+        });
+    } else {
+        authLink.textContent = 'login';
+        authLink.href = './login.html';
+    }
+}
 
 let allWorks = [];
 
