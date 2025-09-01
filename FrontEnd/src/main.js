@@ -9,15 +9,15 @@ const editBtn = document.getElementById('edit-btn');
 const token = localStorage.getItem('token');
 const isLogged = !!token;
 
-if (adminBar) adminBar.hidden = !isLogged;
-adminBar.style.display = isLogged ? 'flex' : 'none';
-if (editBtn) editBtn.hidden = !isLogged;
-if (filtersEl) filtersEl.hidden = isLogged;
-
 if (authLink) {
     if (isLogged) {
         authLink.textContent = 'logout';
         authLink.href = '#';
+        //afficher la barre lorsqu on est logged
+        adminBar.style.display = 'flex';
+        editBtn.style.display = 'flex';
+        filtersEl.style.display = 'none';
+        document.body.classList.add('has-admin-bar');
         authLink.addEventListener('click', (e) => {
             e.preventDefault();
             localStorage.removeItem('token');
@@ -27,6 +27,10 @@ if (authLink) {
         });
     } else {
         authLink.textContent = 'login';
+        editBtn.style.display = 'none';
+        adminBar.style.display = 'none';
+        filtersEl.style.display = 'flex';
+        document.body.classList.remove('has-admin-bar');
         authLink.href = './login.html';
     }
 }

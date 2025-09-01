@@ -140,7 +140,6 @@ body {
 	margin: auto;
 	font-family: 'Work Sans';
 	font-size: 14px;
-	padding-top: 59px;
 }
 
 header {
@@ -452,4 +451,14 @@ header nav a[aria-current="page"] {
 
 .admin-bar .material-symbols-outlined {
 	font-size: 18px;
+}
+
+#login-error {
+	color:#D65353;
+	text-align:center;
+	margin-top:8px;
+}
+
+body.has-admin-bar{
+	padding-top: 59px;
 }
