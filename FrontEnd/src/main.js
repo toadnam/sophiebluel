@@ -19,6 +19,13 @@ const modalForm = document.getElementById('modal-form');
 const modalToForm = document.getElementById('modal-to-form');
 const modalCategory = document.getElementById('modal-category');
 
+const modalFormEl = document.getElementById('modal-add-form');
+const uploadPh = document.getElementById('upload-placeholder');
+const imageInput = document.getElementById('modal-image');
+const previewImg = document.getElementById('upload-preview');
+const titleInput = document.getElementById('modal-title-input');
+const submitBtn = document.getElementById('modal-submit');
+
 if (authLink) {
     if (isLogged) {
         authLink.textContent = 'logout';
@@ -158,6 +165,11 @@ function renderFilters(cats) {
     // passer à "Ajout photo"
     if (modalToForm) modalToForm.addEventListener('click', () => {
         fillModalCategories();
+        modalFormEl?.reset();
+        uploadPh?.removeAttribute('hidden');
+        previewImg?.setAttribute('hidden', '');
+        submitBtn?.setAttribute('disabled', '');
+
         if (modalTitle) modalTitle.textContent = 'Ajout photo';
         if (modalBack) modalBack.hidden = false;
         if (modalGallery) modalGallery.hidden = true;
@@ -172,4 +184,105 @@ function renderFilters(cats) {
         if (modalForm) modalForm.hidden = true;
     });
 
-})();
+    function updateSubmitState() {
+        const ok = imageInput?.files?.[0] && titleInput?.value.trim() && modalCategory?.value;
+        if (ok) submitBtn?.removeAttribute('disabled');
+        else submitBtn?.setAttribute('disabled', '');
+    }
+
+    imageInput?.addEventListener('change', () => {
+        const file = imageInput.files?.[0];
+
+        if (!file) {
+            uploadPh?.removeAttribute('hidden');
+            previewImg?.setAttribute('hidden', '');
+            updateSubmitState();
+            return;
+        }
+
+        if (!file.type.startsWith('image/')) {
+            alert('Veuillez choisir un fichier image.');
+            imageInput.value = '';
+            uploadPh?.removeAttribute('hidden');
+            previewImg?.setAttribute('hidden', '');
+            updateSubmitState();
+            return;
+        }
+
+        if (file.size > 4 * 1024 * 1024) { // 4 Mo max
+            alert('Image trop lourde (4 Mo max).');
+            imageInput.value = '';
+            uploadPh?.removeAttribute('hidden');
+            previewImg?.setAttribute('hidden', '');
+            updateSubmitState();
+            return;
+        }
+
+        previewImg.src = URL.createObjectURL(file);
+        previewImg.removeAttribute('hidden');
+        uploadPh?.setAttribute('hidden', '');
+        updateSubmitState();
+    });
+
+    titleInput?.addEventListener('input', updateSubmitState);
+    modalCategory?.addEventListener('change', updateSubmitState);
+
+    modalFormEl?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        if (!token) { alert('Vous devez être connecté.'); return; }
+
+        const file = imageInput?.files?.[0];
+        const title = titleInput?.value.trim();
+        const category = modalCategory?.value;
+
+        if (!file || !title || !category) {
+            alert('Complétez image, titre et catégorie.');
+            return;
+        }
+
+        const fd = new FormData();
+        fd.append('image', file);
+        fd.append('title', title);
+        fd.append('category', category);
+
+        try {
+            const res = await fetch('http://localhost:5678/api/works', {
+                method: 'POST',
+                headers: { 'Authorization': 'Bearer ' + token },
+                body: fd
+            });
+
+            if (!res.ok) {
+                const msg = await res.text().catch(() => '');
+                console.error('POST /works', res.status, msg);
+                alert("Échec de l'ajout. Vérifiez vos champs.");
+                return;
+            }
+
+            const newWork = await res.json();
+
+            allWorks.push(newWork);
+
+            const activeBtn = filtersEl?.querySelector('[aria-selected="true"]');
+            const currentCat = Number(activeBtn?.dataset?.cat || 0);
+            const items = currentCat === 0
+                ? allWorks
+                : allWorks.filter(w => w.categoryId === currentCat);
+
+            renderGallery(items);
+            renderModalGrid(allWorks);
+
+            modalFormEl.reset();
+            uploadPh?.removeAttribute('hidden');
+            previewImg?.setAttribute('hidden', '');
+            submitBtn?.setAttribute('disabled', '');
+            modalBack?.click();
+
+            alert('Projet ajouté !');
+        } catch (err) {
+            console.error(err);
+            alert('Erreur réseau pendant l’envoi.');
+        }
+    });
+    })();
