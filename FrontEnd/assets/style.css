@@ -555,6 +555,14 @@ body.has-admin-bar {
 	gap: 16px;
 	width: fit-content;
 	margin: 0 auto 24px;
+
+  display: grid;
+  grid-template-columns: repeat(5, 76px);  
+  grid-auto-rows: 102px;                   
+  gap: 16px;
+  width: fit-content;                      
+  margin: 0 auto 24px;                    
+  main
 }
 
 #modal-grid img {
@@ -615,6 +623,7 @@ body.has-admin-bar {
 
 .admin-bar .material-symbols-outlined {
 	font-size: 18px;
+
 }
 
 #upload-zone {
