@@ -9,19 +9,18 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap"
 		rel="stylesheet">
-	<link rel="stylesheet"
-		href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=edit_square">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
 </head>
 
 <body>
 	<div id="admin-bar" class="admin-bar" hidden>
-			<span class="material-symbols-outlined" aria-hidden="true">edit_square</span>
-			<span>Mode édition</span>
-		</div>
+		<span class="material-symbols-outlined" aria-hidden="true">edit_square</span>
+		<span>Mode édition</span>
+	</div>
 	<header>
-		
+
 		<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 		<nav>
 			<ul>
@@ -73,6 +72,43 @@
 			</form>
 		</section>
 	</main>
+
+	<div id="modal" hidden aria-hidden="true">
+		<div id="modal-dialog" role="document" aria-modal="true" aria-labelledby="modal-title">
+			<header id="modal-header">
+				<button id="modal-back" aria-label="Retour" hidden>
+					<span class="material-symbols-outlined" aria-hidden="true">arrow_back</span>
+				</button>
+				<h3 id="modal-title">Galerie photo</h3>
+				<button id="modal-close" aria-label="Fermer">
+					<span class="material-symbols-outlined" aria-hidden="true">close</span>
+				</button>
+			</header>
+
+			<!-- Vue Galerie -->
+			<section id="modal-gallery">
+				<div id="modal-grid"></div>
+				<hr>
+				<button id="modal-to-form">Ajouter une photo</button>
+			</section>
+
+			<!-- Vue Formulaire -->
+			<section id="modal-form" hidden>
+				<form id="modal-add-form">
+					<div id="upload-zone">Zone d’ajout d’image (à faire plus tard)</div>
+
+					<label for="modal-title-input">Titre</label>
+					<input id="modal-title-input" name="title" type="text">
+
+					<label for="modal-category">Catégorie</label>
+					<select id="modal-category" name="category"></select>
+
+					<hr>
+					<button id="modal-submit" type="submit">Valider</button>
+				</form>
+			</section>
+		</div>
+	</div>
 
 	<footer>
 		<nav>
