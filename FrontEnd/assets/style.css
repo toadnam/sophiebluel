@@ -549,12 +549,20 @@ body.has-admin-bar {
 
 /* VUE GALERIE */
 #modal-grid {
+	display: grid;
+	grid-template-columns: repeat(5, 76px);
+	grid-auto-rows: 102px;
+	gap: 16px;
+	width: fit-content;
+	margin: 0 auto 24px;
+
   display: grid;
   grid-template-columns: repeat(5, 76px);  
   grid-auto-rows: 102px;                   
   gap: 16px;
   width: fit-content;                      
   margin: 0 auto 24px;                    
+  main
 }
 
 #modal-grid img {
@@ -615,4 +623,55 @@ body.has-admin-bar {
 
 .admin-bar .material-symbols-outlined {
 	font-size: 18px;
+
+}
+
+#upload-zone {
+  height: 200px;
+  background: #EDF3F7;
+  color: #6B6B6B;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;     
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+#upload-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+#upload-placeholder .material-symbols-outlined {
+	font-size: 48px;
+	opacity: .6;
+}
+
+#upload-button {
+  display: inline-block;
+  height: 36px;
+  line-height: 36px;
+  padding: 0 24px;
+  border-radius: 60px;
+  background: #1D6154;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+#upload-preview {
+  max-height: 170px;
+  width: auto;
+  object-fit: cover;
+  border-radius: 6px;
+  display: block;
+}
+
+#modal-submit[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
