@@ -134,6 +134,10 @@ table {
 	border-spacing: 0;
 }
 
+[hidden] {
+	display: none !important;
+}
+
 /** end reset css**/
 body {
 	max-width: 1140px;
@@ -454,11 +458,211 @@ header nav a[aria-current="page"] {
 }
 
 #login-error {
-	color:#D65353;
-	text-align:center;
-	margin-top:8px;
+	color: #D65353;
+	text-align: center;
+	margin-top: 8px;
 }
 
-body.has-admin-bar{
+body.has-admin-bar {
 	padding-top: 59px;
+}
+
+#admin-bar[hidden] {
+	display: none !important;
+}
+
+.edit-btn[hidden] {
+	display: none !important;
+}
+
+/* MODALE (overlay) */
+#modal {
+	position: fixed;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: rgba(0, 0, 0, 0.4);
+	z-index: 2000;
+}
+
+#modal[hidden] {
+	display: none !important;
+}
+
+/* Boîte modale */
+#modal-dialog {
+	width: 630px;
+	max-width: calc(100vw - 32px);
+	max-height: calc(100vh - 80px);
+	overflow: auto;
+	background: #fff;
+	border-radius: 10px;
+	box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+	padding: 32px 30px 24px;
+}
+
+/* En-tête : titre centré, boutons collés aux bords */
+#modal-header {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 24px;
+}
+
+#modal-title {
+	margin: 0;
+	font: 700 24px/1 "Work Sans", sans-serif;
+	text-align: center;
+}
+
+#modal-back,
+#modal-close {
+	position: absolute;
+	top: 8px;
+	border: 0;
+	background: none;
+	padding: 6px;
+	cursor: pointer;
+}
+
+#modal-back {
+	left: 6px;
+}
+
+#modal-close {
+	right: 6px;
+}
+
+#modal-back .material-symbols-outlined,
+#modal-close .material-symbols-outlined {
+	font-size: 24px;
+}
+
+/* Séparateur fin */
+#modal hr {
+	border: 0;
+	border-top: 1px solid #E6E6E6;
+	margin: 24px 0;
+}
+
+/* VUE GALERIE */
+#modal-grid {
+	display: grid;
+	grid-template-columns: repeat(5, 76px);
+	grid-auto-rows: 102px;
+	gap: 16px;
+	width: fit-content;
+	margin: 0 auto 24px;
+}
+
+#modal-grid img {
+	width: 76px;
+	height: 102px;
+	object-fit: cover;
+	display: block;
+}
+
+/* Boutons */
+#modal-to-form,
+#modal-submit {
+	display: block;
+	height: 36px;
+	margin: 0 auto;
+	padding: 0 24px;
+	border: 1px solid #1D6154;
+	border-radius: 60px;
+	background: #1D6154;
+	color: #fff;
+	font-weight: 700;
+	cursor: pointer;
+}
+
+#modal-submit {
+	margin-top: 18px;
+}
+
+/* Vue Formulaire */
+#upload-zone {
+	height: 200px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #EDF3F7;
+	color: #6B6B6B;
+	border-radius: 6px;
+	margin-bottom: 16px;
+}
+
+#modal-add-form label {
+	display: block;
+	margin: 14px 0 6px;
+	font-weight: 600;
+}
+
+#modal-add-form input,
+#modal-add-form select {
+	width: 100%;
+	height: 51px;
+	padding: 0 12px;
+	border: 0;
+	border-radius: 4px;
+	background: #fff;
+	font-size: 16px;
+	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+.admin-bar .material-symbols-outlined {
+	font-size: 18px;
+}
+
+#upload-zone {
+  height: 200px;
+  background: #EDF3F7;
+  color: #6B6B6B;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;     
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+#upload-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+#upload-placeholder .material-symbols-outlined {
+	font-size: 48px;
+	opacity: .6;
+}
+
+#upload-button {
+  display: inline-block;
+  height: 36px;
+  line-height: 36px;
+  padding: 0 24px;
+  border-radius: 60px;
+  background: #1D6154;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+#upload-preview {
+  max-height: 170px;
+  width: auto;
+  object-fit: cover;
+  border-radius: 6px;
+  display: block;
+}
+
+#modal-submit[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
