@@ -11,3 +11,11 @@ export async function getCategories() {
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json(); // [{ id, name }, ...]
 }
+
+export async function deleteWork(id, token) {
+  const res = await fetch(`${API_BASE}/works/${id}`, {
+    method: "DELETE",
+    headers: { "Authorization": "Bearer " + token }
+  });
+  return res.ok;
+}

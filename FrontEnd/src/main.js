@@ -1,4 +1,4 @@
-import { getWorks, getCategories } from "./api.js";
+import { getWorks, getCategories, deleteWork } from "./api.js";
 
 const galleryEl = document.getElementById("gallery");
 const filtersEl = document.querySelector(".filters");
@@ -10,7 +10,6 @@ const token = localStorage.getItem('token');
 const isLogged = !!token;
 
 const modal = document.getElementById('modal');
-const modalDialog = document.getElementById('modal-dialog');
 const modalClose = document.getElementById('modal-close');
 const modalBack = document.getElementById('modal-back');
 const modalTitle = document.getElementById('modal-title');
@@ -74,8 +73,44 @@ function renderModalGrid(items) {
     const grid = document.getElementById('modal-grid');
     if (!grid) return;
     grid.innerHTML = items.map(w => `
-    <img src="${w.imageUrl}" alt="${escapeHtml(w.title || '')}">
+    <figure class="thumb" data-id="${w.id}">
+      <img src="${w.imageUrl}" alt="${escapeHtml(w.title || '')}">
+      <button type="button" class="thumb-trash" title="Supprimer" aria-label="Supprimer"></button>
+    </figure>
   `).join('');
+}
+
+async function handleModalTrashClick(e) {
+    const btn = e.target.closest('.thumb-trash');
+    if (!btn) return;
+
+    const thumb = btn.closest('.thumb');
+    const id = thumb?.dataset.id;
+    if (!id) return;
+
+    if (!confirm('Supprimer ce projet ?')) return;
+
+    try {
+        btn.disabled = true;
+        thumb.classList.add('is-deleting');
+
+        const freshToken = localStorage.getItem('token');
+        const ok = await deleteWork(id, freshToken);
+        if (!ok) throw new Error('Suppression API échouée');
+
+        thumb.remove();
+
+        document.querySelector(`#gallery [data-id="${id}"]`)?.remove();
+
+        if (Array.isArray(allWorks)) {
+            allWorks = allWorks.filter(w => String(w.id) !== String(id));
+        }
+    } catch (err) {
+        alert("La suppression a échoué. Réessaie.");
+        btn.disabled = false;
+        thumb.classList.remove('is-deleting');
+        console.error(err);
+    }
 }
 
 function renderFilters(cats) {
@@ -100,6 +135,12 @@ function renderFilters(cats) {
         renderGallery(works);
         renderModalGrid(works);
         renderFilters([{ id: 0, name: "Tous" }, ...categories]);
+
+        const modalGrid = document.getElementById('modal-grid');
+        if (modalGrid && !modalGrid.dataset.deleteHooked) {
+            modalGrid.addEventListener('click', handleModalTrashClick);
+            modalGrid.dataset.deleteHooked = '1';
+        }
 
         const firstTab = filtersEl?.querySelector('button[role="tab"]');
         if (firstTab) setActive(firstTab);
@@ -134,7 +175,7 @@ function renderFilters(cats) {
     function fillModalCategories() {
         if (!modalCategory || modalCatsLoaded) return;
         modalCategory.innerHTML =
-            '<option value="">— Choisir —</option>' +
+            '<option value="" selected disabled></option>' +
             allCategories.map(c => `<option value="${c.id}">${escapeHtml(c.name)}</option>`).join('');
         modalCatsLoaded = true;
     }
@@ -285,4 +326,4 @@ function renderFilters(cats) {
             alert('Erreur réseau pendant l’envoi.');
         }
     });
-    })();
+})();

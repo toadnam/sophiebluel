@@ -76,13 +76,14 @@
 	<div id="modal" hidden aria-hidden="true">
 		<div id="modal-dialog" role="document" aria-modal="true" aria-labelledby="modal-title">
 			<header id="modal-header">
-				<button id="modal-back" aria-label="Retour" hidden>
-					<span class="material-symbols-outlined" aria-hidden="true">arrow_back</span>
+				<button id="modal-back" type="button" aria-label="Retour">
+					<img src="./assets/icons/arrow-left.png" alt="Retour">
 				</button>
-				<h3 id="modal-title">Galerie photo</h3>
 				<button id="modal-close" aria-label="Fermer">
 					<span class="material-symbols-outlined" aria-hidden="true">close</span>
 				</button>
+				<h3 id="modal-title">Galerie photo</h3>
+
 			</header>
 
 			<!-- Vue Galerie -->
@@ -96,15 +97,15 @@
 			<section id="modal-form" hidden>
 				<form id="modal-add-form">
 					<div id="upload-zone">
-      <div id="upload-placeholder">
-        <span class="material-symbols-outlined" aria-hidden="true">image</span>
-        <label id="upload-button" for="modal-image">+ Ajouter une photo</label>
-        <small>jpg, png : 4mo max</small>
-      </div>
+						<div id="upload-placeholder">
+							<img id="upload-icon" src="./assets/images/upload-icon.png" alt="Icône ajout photo">
+							<label id="upload-button" for="modal-image">+ Ajouter photo</label>
+							<small>jpg, png : 4mo max</small>
+						</div>
 
-      <img id="upload-preview" alt="" hidden>
-      <input id="modal-image" type="file" accept="image/*" hidden>
-    </div>
+						<img id="upload-preview" alt="" hidden>
+						<input id="modal-image" type="file" accept="image/*" hidden>
+					</div>
 
 					<label for="modal-title-input">Titre</label>
 					<input id="modal-title-input" name="title" type="text">
