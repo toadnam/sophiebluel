@@ -605,8 +605,8 @@ body.has-admin-bar {
 
 #modal-to-form {
 	display: block;
-	width: 420px;
-	height: 44px;
+	width: 40%;
+	height: 36px;
 	margin: 0 auto;
 	border-radius: 999px;
 	border: 1px solid #1D6154;
@@ -635,6 +635,14 @@ body.has-admin-bar {
 	overflow: hidden;
 }
 
+#upload-placeholder {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 12px;
+}
+
 #upload-icon {
 	width: 64px;
 	height: 64px;
@@ -656,15 +664,14 @@ body.has-admin-bar {
 	font-weight: 600;
 	display: inline-flex;
 	align-items: center;
-	align-content: space-around;
-}
-label#upload-button{
-	padding-left: 40px;
+	justify-content: center;
+	margin: 0;
+	cursor: pointer;
 }
 
 #upload-preview {
-	width: 100%;
-	height: 100%;
+	width: 25%;
+    height: auto;
 	object-fit: contain;
 	display: block;
 	margin: 0 auto;
@@ -678,7 +685,7 @@ label#upload-button{
 	text-align: center;
 }
 
-#modal-add-form label {
+#modal-add-form label:not(#upload-button) {
 	margin: 10px auto 6px;
 	padding-left: 80px;
 	display: block;
@@ -718,10 +725,10 @@ select#modal-category {
 	margin: 0 auto;
 	display: block;
 	border-radius: 999px;
-	border: 1px solid #1D6154;
-	background: #1D6154;
+	border: 1px solid #A7A7A7;
+	background: #A7A7A7;
 	color: #fff;
-	font-weight: 700;
+	font-weight: 500;
 	cursor: pointer;
 }
 
