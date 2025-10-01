@@ -55,7 +55,7 @@ async function confirmDialog({
 }
 async function withBlocking(title = "Veuillez patienter…", fn) {
     if (!HAS_SWEET) return await fn();
-    await Swal.fire({
+    Swal.fire({
         title,
         allowOutsideClick: false,
         allowEscapeKey: false,
